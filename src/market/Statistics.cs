@@ -18,11 +18,12 @@ namespace market
                 string line;
                 while ((line = sr.ReadLine()) != null)
                 {
+                    var value = line.Split('\t');
                     var product = new Product
                     {
-                        Category = line.Split('\t')[0],
-                        Description = line.Split('\t')[1],
-                        Vendor = line.Split('\t')[2]
+                        Category = value[0],
+                        Description = value[1],
+                        Vendor = value[2]
                     };
                     list.Add(product);
                 }
@@ -40,10 +41,7 @@ namespace market
         private bool isWord(string word)
         {
             if (word.Length < 3)
-            {
                 return false;
-            }
-
             return true;
         }
         
@@ -60,8 +58,7 @@ namespace market
                 else sb.Append(' ');
             }
 
-            list.AddRange(sb.ToString().Split(' '));
-            list.RemoveAll(string.IsNullOrWhiteSpace);
+            list.AddRange(sb.ToString().Split(' ').Where(str => !String.IsNullOrWhiteSpace(str)));
             return list;
         }
 
